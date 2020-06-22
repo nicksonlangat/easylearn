@@ -1,0 +1,92 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+         <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+         <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!-- development version, includes helpful console warnings -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+        <title>{% block title %}EasyLearn -Tech space for the enthusiasts{% endblock %}</title>
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-light  fixed-top"   style="background:#2b485c;">
+    <a class="navbar-brand ml-4 text-white" href="{% url 'blog_list' %}">EasyLearn</a>
+
+    <a href="#" data-toggle="collapse" aria-controls="navbarSupportedContent"
+    class="colorlib-nav-toggle" data-target="#navbarSupportedContent"><i></i>
+    </a>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link text-white" href="{% url 'my-questions' %}">My questions<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link text-white" href="{% url 'my-answers' %}">My answers<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/question/new">Ask</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'blog_list' %}">Blog</a>
+            </li>
+
+        </ul> 
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-pill btn-outline-danger text-white" href="{% url 'logout' %}" tabindex="-1" aria-disabled="true">Logout</a>
+            </li>
+            <li class="nav-item text-white">
+                <a href="{% url 'profile' %}">
+                    <img src="{{ user.profile_pic.url }}" style="height: 40px;" alt="" class="img-fluid img-thumbnail rounded-circle ml-2">
+                    {{ user.username }}
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link mr-2 btn btn-sm btn-outline-primary" href="{% url 'login' %}" tabindex="-1" aria-disabled="true">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-outline-info" href="{% url 'register' %}" tabindex="-1" aria-disabled="true">Sign Up</a>
+            </li>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<br><br>
+    <body class="bg-light">
+        <div class="container" style="max-width:700">
+            <div class="card shadow-sm" style="margin-top: 20px">
+                <div class="card-header">
+                    <h6 style="margin-bottom: 0; margin-top: 7; display: inline-block">
+                        <a href="/" class="text-success">EasyLearn QA forum
+                            {% if not current_user.is_authenticated %}
+                            
+                            <span class="site-title-second-half"> -Tech space for the enthusiasts</span>
+                            {% endif %}
+                        </a>
+                    </h6>
+                    
+                </div>
+                <div class="pb-2 pt-4 pr-4 pl-4">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+       
+    </body>
+    <script>
+        axios.defaults.xsrfCookieName = 'csrftoken';
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+    </script>
+</html>

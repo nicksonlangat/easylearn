@@ -1,0 +1,54 @@
+{% extends 'base2.html' %}
+{% block title %}/{{ object.title }}{% endblock %}
+ {% load static %} {% load crispy_forms_tags %}
+ {% block content %}
+<section class="ftco-section pt-2 ftco-no-pb">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-lg-8 px-md-5 py-2">
+                <div class="row pt-md-4">
+                    {% if object.image %}
+                    <p>
+                        <img src="{{ object.image.url }}" alt="" class="img-fluid">
+                    </p>
+                    {% endif %}
+                    <h3 class="mb-3">{{ object.title }}</h3><br>                
+                        <div class="tagcloud">
+                            {% for cate in object.category.all %}
+                            <a href="{{ cate.get_absolute_url }}" class="tag-cloud-link">{{ cate }}</a>
+                            {% endfor %}
+                            <span class="mr-2">
+                                    {{ object.dislike.count }}
+                                <a href="{% url 'disLikeBlog' object.pk %}">
+                                <i class="icon-thumbs-down"></i>
+                            </a>    
+                            </span>
+                        </div>               
+                    <p class="ml-2">{{ object.content }}</p>
+                    <div class="pt-3 mt-2">
+                        {% if user.is_authenticated %}
+                        <form action="." method="POST" class="p-3 bg-light">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form|crispy }}
+                            </div>                            
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- END-->
+            </div>            
+                <div class="sidebar-box ftco-animate">
+                    <h3 class="sidebar-heading">Categories</h3>
+                    <ul class="categories">
+                        {% for cate in categoryCount %}
+                            <li><a href="#">{{ cate.category__name }} <span>{{ cate.category__count }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!-- END COL -->
+        </div>
+    </div>
+</section>
+{% endblock %}

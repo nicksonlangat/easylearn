@@ -1,0 +1,16 @@
+{% extends 'base2.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<form action="" method="post">
+    <legend>Update Blog</legend>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <a href="{{ object.get_absolute_url }}" class="btn btn-secondary">cancel</a>
+    <button class="btn btn-outline-primary" type="submit">update</button>
+</form>
+
+{% endblock %}

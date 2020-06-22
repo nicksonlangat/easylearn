@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.html import urlize
 from django import forms
 from django.utils import timezone
-from rest_framework import serializers
+#from rest_framework import serializers
 from django.utils.html import escape
 
 # Taking a time difference as inputs, it returns a string like:

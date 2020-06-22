@@ -47,7 +47,7 @@ class Blog(models.Model):
     title       =   models.CharField(max_length=120)
     content     =   models.TextField()
     view        =   models.PositiveIntegerField(default=0)
-    image       =   models.ImageField(upload_to = "blog/%Y/%m/%d/", blank=True, null=True)
+    #image       =   models.ImageField(upload_to = "blog/%Y/%m/%d/", blank=True, null=True)
     category    =   models.ManyToManyField(Category, related_name="category")
     series      =   models.ManyToManyField(Series, blank=True, related_name="series")
     date_stamp  =   models.DateTimeField(auto_now_add=True)

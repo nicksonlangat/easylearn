@@ -10,7 +10,7 @@ class UsersAdmin(UserAdmin):
     readonly_fields = ('date_joined', 'last_login')
     search_fields = ('email','first_name','last_name')
     filter_horizontal = ()
-    list_filter       = ('gender','country')
+    list_filter       = ('gender')
     fieldsets         = ()
   
 

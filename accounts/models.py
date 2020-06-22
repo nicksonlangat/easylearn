@@ -22,7 +22,7 @@ class User(AbstractBaseUser):
     gender      =   models.CharField(max_length=10, choices=GENDER_CHOICE)
     bio         =   models.TextField(max_length=2000, blank=True, null=True)
     #profile_pic =   models.ImageField(default='default/profile.jpeg',
-                        upload_to="users/%Y/%m/%d", blank=True, null=True)
+                        #upload_to="users/%Y/%m/%d", blank=True, null=True)
     mobile      =   models.CharField(max_length=15, null=True, blank=True)
     #country     =   CountryField()
     #points      =   models.IntegerField(default=0, null=True)

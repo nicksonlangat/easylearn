@@ -7,7 +7,7 @@ from blog.models import Series
 class RegisterForm(UserCreationForm):
     class Meta:
         model   =   User
-        fields  =   ['username','email','country']
+        fields  =   ['username','email']
 
 
 class ProfileUpdate(forms.ModelForm):
@@ -18,7 +18,7 @@ class ProfileUpdate(forms.ModelForm):
     }))
     class Meta:
         model   =   User
-        fields  =   ["profile_pic",'country','bio']
+        fields  =   ['bio']
 
 class BioUpdate(forms.ModelForm):
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={

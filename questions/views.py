@@ -4,8 +4,8 @@ from accounts.models import User
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.urls import reverse
-from questions.models import (Question, Answer, QuestionForm, AnswerForm,
-                        QuestionSerializer, AnswerSerializer)
+from questions.models import (Question, Answer, QuestionForm, AnswerForm)
+                        # QuestionSerializer, AnswerSerializer)
 
 def homeFeedView(request):
     current_user = request.user

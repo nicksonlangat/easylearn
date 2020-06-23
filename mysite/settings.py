@@ -40,8 +40,8 @@ INSTALLED_APPS = [
 
     #User defined
     "accounts",
-    "questions",
-    "blog",
+    # "questions",
+    # "blog",
 
     #3rd Party 
     # "django_countries",
@@ -128,16 +128,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 AUTH_USER_MODEL = 'accounts.User'
-
-STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'login'
-LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = 'login'
+# LOGIN_URL = 'login'
 
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 MEDIA_URL = '/media/'

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.utils import timezone
 from django.shortcuts import reverse
 from .manager import UserManager
-from questions.models import Question, Answer
+#from questions.models import Question, Answer
 from functools import reduce
 from django.db.models import Q
 
@@ -32,19 +32,19 @@ class User(AbstractBaseUser):
     is_superuser =  models.BooleanField(default=False)
     date_joined =   models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login  =   models.DateTimeField(verbose_name="last login", auto_now=True)
-    upvoted_questions = models.ManyToManyField(Question, related_name="upvoted_users")
-    downvoted_questions = models.ManyToManyField(Question, related_name="downvoted_users")
-    upvoted_answers = models.ManyToManyField(Answer, related_name="upvoted_users")
-    downvoted_answers = models.ManyToManyField(Answer, related_name="downvoted_users")
-    points = models.IntegerField(default=0)
-    is_shadow_banned = models.BooleanField(default=False)
+    # upvoted_questions = models.ManyToManyField(Question, related_name="upvoted_users")
+    # downvoted_questions = models.ManyToManyField(Question, related_name="downvoted_users")
+    # upvoted_answers = models.ManyToManyField(Answer, related_name="upvoted_users")
+    # downvoted_answers = models.ManyToManyField(Answer, related_name="downvoted_users")
+    # points = models.IntegerField(default=0)
+    # is_shadow_banned = models.BooleanField(default=False)
 
-    def update_points(self):
-        answers = self.answer_set.filter(~Q(points = 0))
-        points = map(lambda a: a.points, answers)
-        user_points = reduce(lambda x, y: x + y, points, 0)
-        self.points = user_points
-        self.save()
+    # def update_points(self):
+    #     answers = self.answer_set.filter(~Q(points = 0))
+    #     points = map(lambda a: a.points, answers)
+    #     user_points = reduce(lambda x, y: x + y, points, 0)
+    #     self.points = user_points
+    #     self.save()
 
     ''' setting the email as the required login field,
     but we can also user username if we so wish '''

@@ -1,15 +1,12 @@
 from django.db.models import Count
-#from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-#from comments.models import Comment
 from .models import Blog, Category, Series
 from .forms import BlogForm
-#from comments.forms import CommentForm
 # Create your views here.
 
 

@@ -1,11 +1,9 @@
-#from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db import models
 from django.shortcuts import reverse
 from accounts.models import User
 from django.utils import timezone
-#from comments.models import Comment
 from mysite.utils import unique_slug_generator
 # Create your models here.
 
@@ -47,7 +45,7 @@ class Blog(models.Model):
     title       =   models.CharField(max_length=120)
     content     =   models.TextField()
     view        =   models.PositiveIntegerField(default=0)
-    #image       =   models.ImageField(upload_to = "blog/%Y/%m/%d/", blank=True, null=True)
+    image       =   models.ImageField(upload_to = "blog/%Y/%m/%d/", blank=True, null=True)
     category    =   models.ManyToManyField(Category, related_name="category")
     series      =   models.ManyToManyField(Series, blank=True, related_name="series")
     date_stamp  =   models.DateTimeField(auto_now_add=True)
@@ -80,7 +78,7 @@ class Blog(models.Model):
 
 
 
-#### Generate Uniqu Slug
+#### Generate Unique Slug
 def slug_generator(sender, instance, *args, **kargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)

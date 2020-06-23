@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from accounts.models import User
-#from blog.models import Series
+from blog.models import Series
 
 
 class RegisterForm(UserCreationForm):
@@ -32,7 +32,7 @@ class BioUpdate(forms.ModelForm):
 
 
 ########## SERIES RELATED
-# class SeriesForm(forms.ModelForm):
-#     class Meta:
-#         model  =  Series
-#         fields  =   ['title',]
+class SeriesForm(forms.ModelForm):
+    class Meta:
+        model  =  Series
+        fields  =   ['title',]

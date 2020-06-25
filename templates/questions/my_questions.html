@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -19,20 +17,21 @@
             
         </div>
         <div class="pb-2 pt-4 pr-4 pl-4">
-            <div class="container pt-3">
-                <form action="" method="post">
-                    <legend>SIGN UP NOW</legend>
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button class="btn btn-block btn-primary" type="submit">Sign Up</button>
-                </form>
-        
-                <div class="mt-4">
-                    <p>Already have an account ? <a href="{% url 'login' %}">Login</a></p>
-                </div>
-            </div>
+
+            {% for question in questions %}
+                <p>
+                    <a href="/question/{{question.id}}">{{ question.title }} <span class="text-secondary num-answers">({{ question.num_answers }} comments)</span></a>
+                </p>
+            {% endfor %}
+            {% if not questions_exist %}
+                <p>You haven't asked any questions yet.</p>
+            {% endif %}
+            
+
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}

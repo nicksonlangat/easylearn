@@ -1,7 +1,10 @@
-{% extends 'base2.html' %}
-{% block title %}/{{ object.title }}{% endblock %}
+{% extends 'base.html' %}
+{% block title %} {{ object.title }}{% endblock %}
  {% load static %} {% load crispy_forms_tags %}
+
+
  {% block content %}
+ {% include 'blog/delete.html' %}
 <section class="ftco-section pt-2 ftco-no-pb">
     <div class="container-fluid">
         <div class="row d-flex">
@@ -14,8 +17,18 @@
                     {% endif %}
                     <h3 class="mb-3">{{ object.title }}</h3><br>                
                         <div class="tagcloud">
+                            {% if object.author == user or user.is_superuser %}
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal"
+                                        data-target="#exampleModalCenter{{ object.pk }}">
+                                <i class="icon-trash"></i>
+                            </button>
+                            <a href="{% url 'blog_update' object.pk %}" class="btn btn-outline-secondary btn-sm">
+                                <i class="icon-edit"></i>
+                            </a>
+                            
+                            {% endif %}
                             {% for cate in object.category.all %}
-                            <a href="{{ cate.get_absolute_url }}" class="tag-cloud-link">{{ cate }}</a>
+                                <a href="{{ cate.get_absolute_url }}" class="tag-cloud-link">{{ cate }}</a>
                             {% endfor %}
                             <span class="mr-2">
                                     {{ object.dislike.count }}
@@ -40,14 +53,6 @@
                 </div>
                 <!-- END-->
             </div>            
-                <div class="sidebar-box ftco-animate">
-                    <h3 class="sidebar-heading">Categories</h3>
-                    <ul class="categories">
-                        {% for cate in categoryCount %}
-                            <li><a href="#">{{ cate.category__name }} <span>{{ cate.category__count }}</span></a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
             </div>
             <!-- END COL -->
         </div>

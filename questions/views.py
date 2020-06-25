@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from questions.models import Question
 from accounts.models import User
 from django.core.paginator import Paginator
@@ -116,20 +117,18 @@ def questionView(request, id):
                'asked_by_user': asked_by_user,
                'upvoted': upvoted, 'downvoted': downvoted,
                'answers_serialized': answers_serialized}
-    return render(request, 'question.html', context)
+    return render(request, 'questions/question.html', context)
 
+@login_required
 def newView(request):
     current_user = request.user
 
-    if not current_user.is_authenticated:
-        return HttpResponseRedirect(reverse('account_signup'))
-
     if request.method != 'POST':
-        render(request, 'new.html', {'current_user': current_user})
+        render(request, 'questions/new.html', {'current_user': current_user})
     
     form = QuestionForm(request.POST)
     if not form.is_valid() or current_user.points < 0:
-        return render(request, 'new.html', {'current_user': current_user})
+        return render(request, 'questions/new.html', {'current_user': current_user})
         
     q = Question(
         user_id = current_user.id,
@@ -173,6 +172,6 @@ def myQuestionsView(request):
     current_user = request.user
     questions = Question.objects.filter(user_id = current_user.id).order_by('-created')
     questions_exist = len(questions) > 0
-    return render(request, 'my_questions.html',
+    return render(request, 'questions/my_questions.html',
                   {'current_user': current_user, 'questions': questions,
                    'questions_exist': questions_exist})

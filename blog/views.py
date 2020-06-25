@@ -77,45 +77,11 @@ class BlogCategory(ListView):
 
 def blogDetail(request, pk):
     object  =   get_object_or_404(Blog, pk=pk)
-    #categoryCount
-    categoryCount = get_categoryCount()
     #Increament Views
     object.view += 1
     object.save()
-    #Comments
-    # parent_obj = None
-    # initial_data = {
-    #         "content_type": object.get_content_type,
-    #         "object_id": object.id,
-    #     }
-    # form    =   CommentForm(request.POST or None, initial = initial_data)
-    # if form.is_valid():
-    #     c_type = form.cleaned_data.get('content_type')
-    #     try:
-    #         parent_id = int(request.POST.get("parent_id"))
-    #     except:
-    #         parent_id = None
-    #     if parent_id:
-    #         parent_qs = Comment.objects.filter(id=parent_id)
-    #         if parent_qs.exists() and parent_qs.count() == 1:
-    #             parent_obj = parent_qs.first()
-
-       
-    #     new_comment, created = Comment.objects.get_or_create(
-    #         user         = request.user,
-    #         content_type = ContentType.objects.get(model=c_type),
-    #         object_id    = form.cleaned_data.get("object_id"),
-    #         content      =  form.cleaned_data.get("content"),
-    #         parent       =  parent_obj,
-    #     )
-    #     if new_comment.is_parent:
-    #         return HttpResponseRedirect(new_comment.get_absolute_url())
-    #     return redirect(new_comment.parent.get_absolute_url())
-        
-        
 
     context = {
-        'categoryCount':categoryCount,
         'object':object,
     }
     return render(request, 'blog/blog_detail.html', context)

@@ -1,21 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-light  fixed-top"   style="background:#2b485c;">
-    <a class="navbar-brand ml-4 text-white" href="{% url 'blog_list' %}">EasyLearn</a>
+    <a class="navbar-brand ml-4 text-white" href='/'>EasyLearn</a>
 
     <a href="#" data-toggle="collapse" aria-controls="navbarSupportedContent"
     class="colorlib-nav-toggle" data-target="#navbarSupportedContent"><i></i>
     </a>
 
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link text-white" href="{% url 'profile_list' %}">People<span class="sr-only">(current)</span></a>
+                <a class="nav-link text-white" href="{% url 'my-questions' %}">My questions<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link text-white" href="{% url 'home' %}">Questions <span class="sr-only">(current)</span></a>
+                <a class="nav-link text-white" href="/question/new">Ask <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-link text-white" href="/leaderboard">Learderboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'blog_list' %}">Blog</a>
             </li>
 
         </ul> 

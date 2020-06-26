@@ -1,29 +1,71 @@
-{% extends 'base2.html' %} {% load crispy_forms_tags %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %} {% block content %}
 
-<div class="container-fluid about-author d-flex p-4 bg-light">
+
+
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col-4">
-            <div class="bio mr-4">
-                <img src="{{ user.profile_pic.url }}" alt="Image placeholder" class="img-fluid mb-4">
+        <div class="col-md-8">
+            <div class="container-fluid about-author d-flex p-4 bg-light">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="bio mr-4">
+                            <img src="{{ user.profile_pic.url }}" alt="Image placeholder" class="img-fluid mb-4">
+                        </div>
+                    </div>
+            
+                    <div class="col-8">
+                        <h4><b>{{ user.username }}</b></h4>
+                        <p><b>{{ user.email }}</b></p>
+                        <p><b class="mr-3">Points:</b>{{ user.points }} XP</p>
+                        <a class="btn btn-sm btn-primary" href="{% url 'profile_update' %}">Update</a>
+                        <a class="btn btn-sm btn-primary" href="">Change Pwd</a>
+                    </div>
+            
+                    <p>{% if user.bio %} {{ user.bio }}
+                        <button type="button" data-toggle="modal" data-target="#createBlog" data-whatever="@getbootstrap" class="btn btn-info btn-sm">edit
+                            </button> {% else %}
+                        <button type="button" data-toggle="modal" data-target="#createBlog" data-whatever="@getbootstrap" class="btn btn-info btn-sm">Add Bio
+                        </button> please add a bio {% endif %}
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="col-8">
-            <h4><b>{{ user.username }}</b></h4>
-            <p><b>{{ user.email }}</b></p>
-            <p><b class="mr-3">Points:</b>{{ user.points }} XP</p>
-            <a class="btn btn-sm btn-primary" href="{% url 'profile_update' %}">Update</a>
-            <a class="btn btn-sm btn-primary" href="">Change Pwd</a>
-        </div>
 
-        <p>{% if user.bio %} {{ user.bio }}
-            <button type="button" data-toggle="modal" data-target="#createBlog" data-whatever="@getbootstrap" class="btn btn-info btn-sm">edit
-                </button> {% else %}
-            <button type="button" data-toggle="modal" data-target="#createBlog" data-whatever="@getbootstrap" class="btn btn-info btn-sm">Add Bio
-            </button> please add a bio {% endif %}
-        </p>
+        <div class="col-md-4">
+            <div class=" pt-4 sidebar bg-light">
+            
+                <div class="sidebar-box ftco-animate">
+                    <h3 class="sidebar-heading">My Blog Series <button class="btn series_create_btn btn-sm btn-primary">create</button></h3>
+    
+                    <div class="series_form" style="display: none;">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="text" class="form-control" name="" id="">
+                            {{ series_form|crispy }}
+                            <button class="btn btn-sm btn-primary disabled" type="submit">create</button>
+                        </form>
+                    </div>
+                    
+                    <ul class="categories">
+                        {% for serie in series_list %}
+                        <li><a href="{{ serie.get_absolute_url }}">{{ serie }} <span>(6)</span></a></li>
+                        {% empty %}
+                        <div class="class">your have no series</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+    
+    
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+
 
 
 
@@ -91,67 +133,7 @@
             <!-- END-->
             {% include 'blog/paginator.html' %}
         </div>
-        <div class="col-xl-4 sidebar bg-light">
-            <div class="sidebar-box pt-md-4">
-                <form action="#" class="search-form">
-                    <div class="form-group">
-                        <span class="icon icon-search"></span>
-                        <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                    </div>
-                </form>
-            </div>
-            <div class="sidebar-box ftco-animate">
-                <h3 class="sidebar-heading">My Blog Serie <button class="btn series_create_btn btn-sm btn-primary">create</button></h3>
-
-                <div class="series_form" style="display: none;">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <input type="text" class="form-control" name="" id="">
-                        {{ series_form|crispy }}
-                        <button class="btn btn-sm btn-primary" type="submit">create</button>
-                    </form>
-                </div>
-                
-                <ul class="categories">
-                    {% for serie in series_list %}
-                    <li><a href="{{ serie.get_absolute_url }}">{{ serie }} <span>(6)</span></a></li>
-                    {% empty %}
-                    <div class="class">your have no series</div>
-                    {% endfor %}
-                </ul>
-            </div>
-
-
-            <!--Tag Cloud-->
-            <div class="sidebar-box">
-                <h3 class="sidebar-heading">Tag Cloud</h3>
-                <ul class="tagcloud">
-                    <a href="#" class="tag-cloud-link">animals</a>
-                    <a href="#" class="tag-cloud-link">human</a>
-                    <a href="#" class="tag-cloud-link">people</a>
-                    <a href="#" class="tag-cloud-link">cat</a>
-                    <a href="#" class="tag-cloud-link">dog</a>
-                    <a href="#" class="tag-cloud-link">nature</a>
-                    <a href="#" class="tag-cloud-link">leaves</a>
-                    <a href="#" class="tag-cloud-link">food</a>
-                </ul>
-            </div>
-
-            <!--Archieves-->
-            {% comment %}
-            <div class="sidebar-box">
-                <h3 class="sidebar-heading">Archives</h3>
-                <ul class="categories">
-                    <li><a href="#">December 2018 <span>(10)</span></a></li>
-                    <li><a href="#">September 2018 <span>(6)</span></a></li>
-                    <li><a href="#">August 2018 <span>(8)</span></a></li>
-                    <li><a href="#">July 2018 <span>(2)</span></a></li>
-                    <li><a href="#">June 2018 <span>(7)</span></a></li>
-                    <li><a href="#">May 2018 <span>(5)</span></a></li>
-                </ul>
-            </div>
-            {% endcomment %}
-        </div>
+      
         <!-- END COL -->
     </div>
 </div>

@@ -24,73 +24,77 @@ class SeriesDetail(DetailView):
     model       =   Series
 
 
-#categoryCount
-def get_categoryCount():
-    queryset = Blog.objects.values('category__name').annotate(Count('category'))
-    return queryset
+class BlogCreate(LoginRequiredMixin, CreateView):
+    model   =   Blog
+    fields  =   ['title','content', 'category']
+    #form_class  =   BlogForm
+    template_name   =   "blog/blog_create.html"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
 
 class BlogList(ListView):
     model       =   Blog
-    paginate_by =   4
+    paginate_by =   15
     ordering    =   '-date_stamp'
-    form        =   BlogForm()
-
-    def post(self, request, *args, **kwargs):
-        form    =   BlogForm(request.POST)
-        form.instance.author    =   request.user
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Blog Created successfully")
-            return redirect('blog_list')
         
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categoryCount'] = get_categoryCount()
-        context['form'] = self.form
+        context['series'] = Series.objects.all()[:8]
+        context['categories'] = Category.objects.all()[:10]
         return context
 
 
 class BlogCategory(ListView):
-    template_name = "blog/blog_category.html"
-    form        =   BlogForm()
+    template_name   = "blog/blog_category.html"
+    paginate_by     =   15
+   
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
         return  Blog.objects.filter(category=self.category)
 
-    def post(self, request, *args, **kwargs):
-        form    =   BlogForm(request.POST)
-        form.instance.author    =   request.user
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Blog Created successfully")
-            return redirect(object.get_absolute_url())
 
     def get_context_data(self, **kwargs):
         context = super(BlogCategory, self).get_context_data(**kwargs)
         context['category_list']  = Category.objects.all()
-        context['form'] = self.form
+        return context
+
+
+class BlogDetail(DetailView):
+    model       =       Blog
+
+    def get_object(self):
+        obj = super(BlogDetail, self).get_object()
+        obj.view +=1
+        obj.save()
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        is_liked    = False
+        is_disliked = False
+        if obj.like.filter(id = self.request.user.pk).exists():
+            is_liked = True
+        if obj.dislike.filter(id = self.request.user.pk).exists():
+            is_disliked = True
+
+        context['is_liked']     = is_liked
+        context['is_disliked']  = is_disliked
         return context
 
 
 
-def blogDetail(request, pk):
-    object  =   get_object_or_404(Blog, pk=pk)
-    #Increament Views
-    object.view += 1
-    object.save()
-
-    context = {
-        'object':object,
-    }
-    return render(request, 'blog/blog_detail.html', context)
-
-
 
 class BlogUpdate(UpdateView):
-    model   =   Blog
-    fields  =   ['title','content','category']
+    model       =   Blog
+    #form_class  =   BlogForm
+    fields      =   ['title','content','category']
 
     def form_valid(self, form):
         form.instance.edited == True
@@ -111,9 +115,12 @@ def blogDelete(request, pk):
 @login_required
 def likeBlog(request, pk):
     obj = get_object_or_404(Blog, pk=pk)
-    if obj.like.filter(id=request.user.id).exists():
+    if obj.dislike.filter(id=request.user.id).exists():
+        obj.dislike.remove(request.user.id)
+        obj.like.add(request.user.id)
+        #obj.author.points -= 1  # Reduce Authors Points by one if user dislikes the blog
+    elif obj.like.filter(id=request.user.id).exists():
         obj.like.remove(request.user.id)
-        obj.author.points -= 1  # Reduce Authors Points by one if user dislikes the blog
     else:
         obj.like.add(request.user.id)
         obj.author.points += 1  # Increase Authors Points by one if user likes the blog

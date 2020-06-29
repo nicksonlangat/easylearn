@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" 
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <!-- highlight.js -->
     <title>EasyLearn -Tech space for the enthusiasts{% block title %}{% endblock %}</title>
 </head>
 
@@ -45,13 +50,6 @@
         $('.comment-reply-btn').click(function(event) {
             event.preventDefault();
             $(this).parent().next(".comment-reply-form").fadeToggle();
-        })
-    </script>
-
-    <script>
-        $('.series_create_btn').click(function(event){
-            event.preventDefault();
-            $(this).parent().next(".series_form").fadeToggle();
         })
     </script>
 

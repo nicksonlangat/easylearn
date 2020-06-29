@@ -8,8 +8,9 @@ urlpatterns = [
     ###### SERIES RELATED END HERE ######
 
     ###### BLOG RELATED #########
+    path('creta-blog/', BlogCreate.as_view(), name="blog_create"),
     path('', BlogList.as_view(), name="blog_list"),#Blog List
-    path('<int:pk>/', blogDetail, name="blog_detail"),#Blog Details
+    path('<int:pk>/', BlogDetail.as_view(), name="blog_detail"),#Blog Details
     path('category/<str:slug>/', BlogCategory.as_view(), name="blog_category"),#Category
     
     path('<int:pk>/update/', BlogUpdate.as_view(), name="blog_update"),# Blog Update

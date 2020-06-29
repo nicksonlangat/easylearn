@@ -30,14 +30,42 @@
                             {% for cate in object.category.all %}
                                 <a href="{{ cate.get_absolute_url }}" class="tag-cloud-link">{{ cate }}</a>
                             {% endfor %}
+
+                            {% if is_liked %}
                             <span class="mr-2">
-                                    {{ object.dislike.count }}
-                                <a href="{% url 'disLikeBlog' object.pk %}">
-                                <i class="icon-thumbs-down"></i>
-                            </a>    
+                                <a href="{% url 'likeBlog' object.pk %}">
+                                <i class="icon-thumbs-up"></i>
+                                </a>{{ object.like.count }}
                             </span>
-                        </div>               
-                    <p class="ml-2">{{ object.content }}</p>
+                            {% else %}
+                            <span class="mr-2">
+                                <a href="{% url 'likeBlog' object.pk %}">
+                                <i class="icon-thumbs-o-up"></i>
+                                </a>{{ object.like.count }}
+                            </span>
+                            {% endif %}
+
+                            {% if is_disliked %}
+                            <span class="mr-2">
+                                <a href="{% url 'disLikeBlog' object.pk %}">
+                                    <i class="icon-thumbs-down"></i>
+                                </a>{{ object.dislike.count }}   
+                            </span>
+                            {% else %}
+                            <span class="mr-2">
+                                <a href="{% url 'disLikeBlog' object.pk %}">
+                                    <i class="icon-thumbs-o-down"></i>
+                                </a>{{ object.dislike.count }}   
+                            </span>
+                            {% endif %}
+
+
+
+                        </div>
+                        <div>
+                            {{ object.content|safe|urlize }}
+                        </div>          
+                    
                     
                     <div class="pt-3 mt-2">
                         {% if user.is_authenticated %}

@@ -25,17 +25,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #3rd Party
+    "django_countries",
+    "django_cleanup",
+    "rest_framework",
+    "crispy_forms",
+    "ckeditor",
 
     #User defined
     "accounts",
     "questions",
     "blog",
 
-    #3rd Party 
-    "django_countries",
-    "django_cleanup",
-    "rest_framework",
-    "crispy_forms",
+    
 ]
 
 MIDDLEWARE = [
@@ -113,8 +115,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+
+
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'
@@ -123,7 +129,39 @@ LOGIN_URL = 'login'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+SUMMERNOTE_THEME        =   'bs4'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+######### CKEDITOR
+CKEDITOR_UPLOAD_PATH = 'content/ckeditor/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar':'Custom',
+        'height': 370,
+        'width': '100%',
+        
+        'toolbar_Custom':[
+            ['Styles', 'Format', 'Bold','Italic'],
+            ['Link','Unlink', 'Anchor', 'CodeSnippet'], #options 'Image'
+            ['TextColor', 'BGColor','Flash'],
+            ['Smiley', 'SpecialChar','Table', 'Source']
+        ],
+        'extraPlugins': 'codesnippet',
+    }
+}
+'''
+'special': {
+    'toolbar':'Special',
+    'toolbar_Special': [
+        ['']
+    ]
+}
+'''

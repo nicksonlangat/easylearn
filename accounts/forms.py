@@ -18,6 +18,8 @@ class RegisterForm(UserCreationForm):
         fields  =   ['username','email','gender','country','password1','password2']
 
 
+
+
 class ProfileUpdate(forms.ModelForm):
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'rows':'6',
@@ -27,6 +29,9 @@ class ProfileUpdate(forms.ModelForm):
     class Meta:
         model   =   User
         fields  =   ['bio']
+
+
+
 
 class BioUpdate(forms.ModelForm):
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={
@@ -39,8 +44,3 @@ class BioUpdate(forms.ModelForm):
         fields  =   ['bio',]
 
 
-########## SERIES RELATED
-class SeriesForm(forms.ModelForm):
-    class Meta:
-        model  =  Series
-        fields  =   ['title',]

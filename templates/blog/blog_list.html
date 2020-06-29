@@ -5,9 +5,9 @@
 
     <div class="mt-3 ml-4 mb-2">
         {% if user.is_authenticated %}
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#createBlog" data-whatever="@getbootstrap">
+        <a class="btn btn-sm btn-primary" href="{% url 'blog_create' %}">
     + Blog
-  </button> {% else %}
+        </a> {% else %}
         <div class="alert alert-info"><a href="{% url 'login' %}">Login</a> to create blog post </div>
         {% endif %}
     </div>
@@ -66,33 +66,28 @@
             </div>
             
                 <div class="sidebar-box ftco-animate">
-                    <h3 class="sidebar-heading">Categories</h3>
+                    <h3 class="sidebar-heading">Series</h3>
                     <ul class="categories">
-                        {% for cate in categoryCount %}
-                        <li><a href="{{ cate.get_absolute_url }}">{{ cate.category__name }} <span>({{ cate.category__count }})</span></a></li>
+                        {% for s in series %}
+                        <li><a href="{{ s.get_absolute_url }}">{{ s }} <span>by - ({{ s.owner }})</span></a></li>
                         {% endfor %}
                     </ul>
                 </div>
 
 
-                {% comment %}
+                
                 <!--Tag Cloud-->
                 <div class="sidebar-box">
-                    <h3 class="sidebar-heading">Tag Cloud</h3>
+                    <h3 class="sidebar-heading">Category Tags</h3>
                     <ul class="tagcloud">
-                        <a href="#" class="tag-cloud-link">animals</a>
-                        <a href="#" class="tag-cloud-link">human</a>
-                        <a href="#" class="tag-cloud-link">people</a>
-                        <a href="#" class="tag-cloud-link">cat</a>
-                        <a href="#" class="tag-cloud-link">dog</a>
-                        <a href="#" class="tag-cloud-link">nature</a>
-                        <a href="#" class="tag-cloud-link">leaves</a>
-                        <a href="#" class="tag-cloud-link">food</a>
+                        {% for cate in categories %}
+                        <a href="{{ cate.get_absolute_url }}" class="tag-cloud-link">{{ cate }}</a>
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <!--Archieves-->
-                
+                {% comment %}
                 <div class="sidebar-box">
                     <h3 class="sidebar-heading">Archives</h3>
                     <ul class="categories">
@@ -110,36 +105,6 @@
         </div>
     </div>
 </section>
-
-<!-- Create Model-->
-<div class="modal fade" id="createBlog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Blog Post</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST">{% csrf_token %}
-                    <div class="form-group">
-                        {{ form.title }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.content }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Create Model-->
-
 
 
 {% endblock %}

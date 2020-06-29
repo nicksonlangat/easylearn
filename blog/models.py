@@ -5,6 +5,8 @@ from django.shortcuts import reverse
 from accounts.models import User
 from django.utils import timezone
 from mysite.utils import unique_slug_generator
+from ckeditor.fields import RichTextField
+
 # Create your models here.
 
 class Category(models.Model):
@@ -43,7 +45,7 @@ class Series(models.Model):
 class Blog(models.Model):
     author      =   models.ForeignKey(User, on_delete=models.CASCADE)
     title       =   models.CharField(max_length=120)
-    content     =   models.TextField()
+    content     =   RichTextField()#config_name='special'
     view        =   models.PositiveIntegerField(default=0)
     image       =   models.ImageField(upload_to = "blog/%Y/%m/%d/", blank=True, null=True)
     category    =   models.ManyToManyField(Category, related_name="category")

@@ -24,8 +24,8 @@
                             <a href="{{ obj.get_absolute_url }}" class="img" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
                             {% endif %}
                             <div class="text pt-0">
-                                <h3 class="mb-1"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h3>
-                                <p class="mb-3">{{ obj.content }} <a href="">Read more</a></p>
+                                <h3 class="mb-1"><a href="{{ obj.get_absolute_url }}">{{ obj.title|truncatewords:8 }}</a></h3>
+                                <p class="mb-3">{{ obj.content|truncatewords:22 }} <a href="">Read more</a></p>
                                 <div class="author mb-0 d-flex">
                                     <a href="#" class="img" style="background-image: url({{ obj.author.profile_pic.url }});"></a>
                                     <div class="ml-3 info">

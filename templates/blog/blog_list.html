@@ -21,7 +21,7 @@
                     <div class="col-md-12 ">
                         <div class="blog-entry-2">
                             <div class="text pt-0">
-                                <h3 class="mb-1"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h3>
+                                <h3 class="mb-1"><a href="{{ object.get_absolute_url }}">{{ object.title|truncatewords:8 }}</a></h3>
                                 <p class="mb-3">{{ object.content|truncatewords:22|urlize }}</p>
                                 <div class="author mb-0 d-flex">
                                     <a href="#" class="img" style="background-image: url({{ object.author.profile_pic.url }});"></a>
